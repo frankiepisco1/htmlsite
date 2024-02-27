@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Collections with Style</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    background-color: #ffffff; /* Solid white background */
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    padding-top: 50px;
+  }
+  h2 {
+    font-family: 'Fredoka One', cursive;
+    color: #333;
+    margin-bottom: 20px; /* Spacing above the collection */
+  }
+  .button, .arrow {
+    background-color: #e0e0e0; /* Lighter grey */
+    color: black; /* Text color */
+    padding: 10px 20px; /* Adjusted to make buttons slightly smaller */
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px; /* Adjusted margin */
+    border: 2px solid black; /* Black border */
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+  }
+  .arrow:hover, .button:hover {
+    transform: scale(1.1);
+  }
+  .collection-container {
+    position: relative;
+    margin: 20px auto;
+    width: calc(60% + 40px); /* Adjust width to account for padding */
+    overflow: hidden; /* Hide the overflow */
+  }
+  .collection {
+    display: flex;
+    transition: transform 0.5s ease;
+    margin-left: -20px; /* Adjust for first image padding */
+  }
+  .collection img {
+    width: calc(33.3333% - 20px); /* Adjust width for padding */
+    flex-shrink: 0; /* Prevent images from resizing */
+    margin-left: 20px; /* Padding between images */
+  }
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  .prev {
+    left: 0;
+  }
+  .next {
+    right: 0;
+  }
+</style>
+<script>
+  let index = 0; // Starting index
+
+  function slide(direction) {
+    const collection = document.querySelector('.collection');
+    const imageWidth = document.querySelector('.collection img').offsetWidth + 20; // Image width plus margin
+
+    if(direction === 'next') {
+      if(index < 2) { // Allows looping through images
+        index++;
+      } else {
+        index = 0;
+      }
+    } else if(direction === 'prev') {
+      if(index > 0) {
+        index--;
+      } else {
+        index = 2; // Loop back to the last set of images
+      }
+    }
+    collection.style.transform = `translateX(-${index * imageWidth}px)`;
+  }
+</script>
+</head>
+<body>
+
+<button class="button works">Works</button>
+<button class="button gallery">Gallery</button>
+<button class="button contact">Contact</button>
+<button class="button about">About</button>
+
+<!-- Collections Section -->
+<h2>Collections</h2> <!-- Big heading for the Collections -->
+<div class="collection-container">
+  <div class="collection">
+    <!-- Update the 'src' with the correct paths to your images -->
+    <img src="image1.jpg" alt="Collection Image 1">
+    <img src="image2.jpg" alt="Collection Image 2">
+    <img src="image3.jpg" alt="Collection Image 3">
+    <img src="image 3 3.jpg" alt="Collection Image 4"> <!-- The hidden image initially -->
+  </div>
+  <button class="arrow prev" onclick="slide('prev')">&#10094;</button>
+  <button class="arrow next" onclick="slide('next')">&#10095;</button>
+</div>
+
+</body>
+</html>
